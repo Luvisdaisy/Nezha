@@ -10,7 +10,7 @@ import os
 count = 1
 
 # 配置 ChromeDriver
-chrome_driver_path = "C:\Program Files\Google\Chrome\Application\chromedriver.exe"  # 请修改为你的 chromedriver 路径
+chrome_driver_path = "C:\Program Files\Google\Chrome\Application\chromedriver.exe"
 service = Service(chrome_driver_path)
 options = webdriver.ChromeOptions()
 options.add_argument("--disable-gpu")
@@ -19,14 +19,14 @@ options.add_argument("--disable-gpu")
 driver = webdriver.Chrome(service=service, options=options)
 
 driver.get("https://www.douban.com")
-time.sleep(3)  # 等待页面加载
+time.sleep(3)
 input("请手动登录豆瓣，登录成功后按回车键继续...")
 
 # 目标影评页面
-movie_url = "https://movie.douban.com/subject/34780991/reviews?sort=hotest&start=1520"
+movie_url = "https://movie.douban.com/subject/34780991/reviews"
 driver.get(movie_url)
 
-time.sleep(5)  # 等待页面加载
+time.sleep(5)
 
 wait = WebDriverWait(driver, 10)
 reviews_data = []
@@ -45,7 +45,7 @@ while True:
                     "window.open('{}', '_blank');".format(review_link)
                 )
                 driver.switch_to.window(driver.window_handles[1])
-                time.sleep(10)  # 等待详情页加载
+                time.sleep(10)
 
                 title, rating, review_content, upvote, downvote = (
                     "默认标题",
@@ -122,7 +122,7 @@ while True:
 
         next_button = driver.find_element(By.CSS_SELECTOR, ".next")
         if "disabled" in next_button.get_attribute("class"):
-            break  # 到底了
+            break
         next_button.click()
         time.sleep(10)
     except Exception as e:
